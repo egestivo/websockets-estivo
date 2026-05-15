@@ -1,7 +1,7 @@
-// Conexion del panel admin con Socket.IO para ver cambios en tiempo real.
+// Conexion del panel admin con Socket.IO.
 const socket = io();
 
-// Referencias de la interfaz del panel de administrador.
+// Elementos de la interfaz del admin.
 const releaseAllBtn = document.getElementById('releaseAllBtn');
 const resetSeatsBtn = document.getElementById('resetSeatsBtn');
 const statAvailable = document.getElementById('statAvailable');
@@ -9,83 +9,62 @@ const statReserved = document.getElementById('statReserved');
 const statSold = document.getElementById('statSold');
 const adminTableBody = document.getElementById('adminTableBody');
 
-// Estado local para renderizar tabla y contadores.
+// Estado global que el admin ve en pantalla.
 let seatsState = {};
 
-// Convierte timestamps a una hora legible; devuelve guion si no aplica.
-function toTime(expiresAt) {
-    if (!expiresAt) {
-        return '-';
-    }
-
-    return new Date(expiresAt).toLocaleTimeString();
-}
-
-// Formatea precio para mantener consistencia visual con la vista de cliente.
-function toMoney(value) {
-    return `$${Number(value || 0).toFixed(2)}`;
-}
-
-// Renderiza contadores + tabla completa de asientos.
-function renderAdminView() {
-    const seats = Object.entries(seatsState).sort(([a], [b]) => a.localeCompare(b));
-
-    let availableCount = 0;
-    let reservedCount = 0;
-    let soldCount = 0;
+// Pinta la tabla y los contadores.
+function paintAdmin() {
+    const seatIds = Object.keys(seatsState).sort();
+    let available = 0;
+    let reserved = 0;
+    let sold = 0;
 
     adminTableBody.innerHTML = '';
 
-    seats.forEach(([seatId, seat]) => {
-        if (seat.status === 'available') availableCount += 1;
-        if (seat.status === 'reserved') reservedCount += 1;
-        if (seat.status === 'sold') soldCount += 1;
+    seatIds.forEach((seatId) => {
+        const seat = seatsState[seatId];
+
+        if (seat.status === 'available') available += 1;
+        if (seat.status === 'reserved') reserved += 1;
+        if (seat.status === 'sold') sold += 1;
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${seatId}</td>
             <td>${seat.status}</td>
             <td>${seat.user || '-'}</td>
-            <td>${toMoney(seat.price)}</td>
-            <td>${seat.status === 'reserved' ? toTime(seat.expiresAt) : '-'}</td>
+            <td>$${Number(seat.price || 0).toFixed(2)}</td>
+            <td>${seat.status === 'reserved' ? new Date(seat.expiresAt).toLocaleTimeString() : '-'}</td>
         `;
-
         adminTableBody.appendChild(row);
     });
 
-    statAvailable.textContent = `Disponibles: ${availableCount}`;
-    statReserved.textContent = `Reservados: ${reservedCount}`;
-    statSold.textContent = `Vendidos: ${soldCount}`;
+    statAvailable.textContent = `Disponibles: ${available}`;
+    statReserved.textContent = `Reservados: ${reserved}`;
+    statSold.textContent = `Vendidos: ${sold}`;
 }
 
-// Boton para liberar todas las reservas (sin tocar asientos vendidos).
-releaseAllBtn.addEventListener('click', () => {
-    socket.emit('admin:releaseAllReservations');
-});
-
-// Boton para reiniciar completamente el mapa de asientos.
+// Acciones del admin: solo mandan orden al servidor.
+releaseAllBtn.addEventListener('click', () => socket.emit('admin:releaseAllReservations'));
 resetSeatsBtn.addEventListener('click', () => {
-    const confirmed = window.confirm('Esto reseteara todo el estado de asientos. ¿Continuar?');
-    if (confirmed) {
+    if (window.confirm('Esto reseteara todo el estado de asientos. ¿Continuar?')) {
         socket.emit('admin:resetSeats');
     }
 });
 
-// Carga inicial al entrar al panel.
+// Carga inicial y actualizaciones globales.
 socket.on('init', ({ seats }) => {
     seatsState = seats || {};
-    renderAdminView();
+    paintAdmin();
 });
 
-// Snapshot completo cuando el admin ejecuta acciones globales.
 socket.on('snapshot', ({ seats }) => {
     seatsState = seats || {};
-    renderAdminView();
+    paintAdmin();
 });
 
-// Actualizacion de un solo asiento para reaccion inmediata.
 socket.on('seatUpdated', ({ seatId, seat }) => {
     seatsState[seatId] = seat;
-    renderAdminView();
+    paintAdmin();
 });
 
