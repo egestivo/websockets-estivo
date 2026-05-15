@@ -1,0 +1,77 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+    text-align: center;
+    background: #0b1321;
+}
+
+h1 {
+    color: cyan
+}
+
+#userNameInput{
+    padding: 10px;
+    width: 250px;
+    font-size: 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#timerDisplay {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 20px;
+    color: #941616;
+}
+
+#seating {
+    display: grid;
+    grid-template-columns: repeat(10, 75px);
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+#buyBtn {
+    background-color: #3d3db2;
+    color: #d979d9;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#buyBtn:hover {
+    background-color: #7070d7;
+    color: #ad06ad;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.seat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 75px;
+    background-color: #7070d7;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #000;
+    font-weight: bolder;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.seat.reserved {
+    background-color: #811381;
+}
+
+.seat.sold {
+    background-color: #930a0a;
+    color: white;
+    cursor: not-allowed;
+}

@@ -1,0 +1,17 @@
+# IDEA Files
+idea/
+*.iml
+
+# Node Modules
+node_modules/
+# Build Output
+dist/
+build/
+# Logs
+logs/
+*.log
+# Environment Variables
+.env
+# OS Files
+.DS_Store
+Thumbs.db
