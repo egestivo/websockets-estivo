@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,36 @@
 </head>
 <body>
     <h1>Reserva de Tickets - Cine</h1>
+
+    <!-- Nombre del cliente que realizara reservas y compras -->
     <input type="text" id="userNameInput" placeholder="Ingresa tu nombre">
-    <div id="timerDisplay"></div>
+
+    <!-- Cuenta regresiva de la reserva activa del usuario actual -->
+    <div id="timerDisplay">Sin reservas activas</div>
+
+    <!-- Mapa visual de asientos (se crea dinamicamente desde script.js) -->
     <div id="seating"></div>
+
+    <!-- Resumen rapido del total seleccionado -->
+    <div id="totalDisplay">Total seleccionado: $0.00</div>
+
+    <!-- Mini factura previa a confirmar la compra -->
+    <section id="invoiceBox">
+        <h2>Factura previa</h2>
+        <ul id="invoiceList">
+            <li>No hay asientos seleccionados</li>
+        </ul>
+    </section>
+
     <button id="buyBtn">Comprar</button>
+
+    <!-- Enlace para abrir el panel de administracion en otra vista -->
+    <p class="admin-link-wrap">
+        <a class="admin-link" href="./admin.html">Abrir panel de administrador</a>
+    </p>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="./script.js"></script>
-
 
 </body>
 </html>

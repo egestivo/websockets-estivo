@@ -3,6 +3,7 @@ body {
     padding: 20px;
     text-align: center;
     background: #0b1321;
+    color: #f5f7ff;
 }
 
 h1 {
@@ -22,7 +23,7 @@ h1 {
     font-size: 14px;
     font-weight: bold;
     margin: 10px 0 20px;
-    color: #941616;
+    color: #ffb3b3;
 }
 
 #seating {
@@ -30,7 +31,40 @@ h1 {
     grid-template-columns: repeat(10, 75px);
     gap: 8px;
     justify-content: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+#totalDisplay {
+    margin: 6px 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #b6f2ff;
+}
+
+#invoiceBox {
+    max-width: 340px;
+    margin: 0 auto 18px;
+    text-align: left;
+    background: #101f3b;
+    border: 1px solid #334f78;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+#invoiceBox h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: #c8d9ff;
+}
+
+#invoiceList {
+    margin: 0;
+    padding-left: 18px;
+    color: #d7e5ff;
+}
+
+#invoiceList li {
+    margin-bottom: 4px;
 }
 
 #buyBtn {
@@ -55,6 +89,8 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 2px;
     width: 75px;
     height: 75px;
     background-color: #7070d7;
@@ -66,12 +102,103 @@ h1 {
     box-sizing: border-box;
 }
 
+.seat-id {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.seat-owner {
+    min-height: 12px;
+    font-size: 10px;
+    line-height: 1;
+    opacity: 0.95;
+}
+
 .seat.reserved {
     background-color: #811381;
+}
+
+.seat.mine {
+    outline: 2px solid #ffe88a;
+    outline-offset: -2px;
 }
 
 .seat.sold {
     background-color: #930a0a;
     color: white;
     cursor: not-allowed;
+}
+
+.admin-link-wrap {
+    margin-top: 14px;
+}
+
+.admin-link {
+    color: #9ed0ff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.admin-link:hover {
+    text-decoration: underline;
+}
+
+/* -------- Vista de administrador -------- */
+.admin-page {
+    max-width: 920px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    margin: 12px 0 16px;
+}
+
+.admin-actions button {
+    background: #214f79;
+    color: #f7fbff;
+    border: 1px solid #3d6a95;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.admin-actions button:hover {
+    background: #2d6597;
+}
+
+.admin-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.admin-stat-card {
+    background: #12223f;
+    border: 1px solid #344f79;
+    border-radius: 8px;
+    padding: 10px 12px;
+    min-width: 170px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f1a31;
+    border: 1px solid #314e7b;
+}
+
+.admin-table th,
+.admin-table td {
+    border: 1px solid #284266;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.admin-table th {
+    background: #1b3055;
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - Cine</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <main class="admin-page">
+        <h1>Panel de Administrador</h1>
+
+        <!-- Botones de control global solicitados por el enunciado -->
+        <section class="admin-actions">
+            <button id="releaseAllBtn" type="button">Liberar todas las reservas</button>
+            <button id="resetSeatsBtn" type="button">Resetear asientos</button>
+            <a class="admin-link" href="./index.html">Volver a cliente</a>
+        </section>
+
+        <!-- Resumen rapido del estado actual -->
+        <section class="admin-stats">
+            <div class="admin-stat-card" id="statAvailable">Disponibles: 0</div>
+            <div class="admin-stat-card" id="statReserved">Reservados: 0</div>
+            <div class="admin-stat-card" id="statSold">Vendidos: 0</div>
+        </section>
+
+        <!-- Tabla global para monitorear usuario, estado y precio de cada asiento -->
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Asiento</th>
+                    <th>Estado</th>
+                    <th>Usuario</th>
+                    <th>Precio</th>
+                    <th>Expira</th>
+                </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+        </table>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./admin.js"></script>
+</body>
+</html>
+
